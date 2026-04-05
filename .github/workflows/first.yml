@@ -1,18 +1,23 @@
-name: Day1 First Workflow
+name: Day2 CI Pipeline
 
 on:
   push:
 
 jobs:
-  first-job:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Step 1
-        run: echo "Hello Sravan"
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - name: Step 2
-        run: node -v
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
 
-      - name: Step 3
-        run: echo "Workflow working fine"
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm test
