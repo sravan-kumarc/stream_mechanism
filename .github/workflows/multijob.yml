@@ -1,7 +1,8 @@
 name: MultiJob CI Pipeline
 
 on:
-  push:
+  workflow_dispatch:
+    
 
 
 jobs:
