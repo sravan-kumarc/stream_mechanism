@@ -7,6 +7,7 @@ on:
        description: choose something
        required: true
        default: dev
+       type: choice
        options:
          - dev
          - uat
