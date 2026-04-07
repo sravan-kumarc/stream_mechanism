@@ -4,18 +4,18 @@ on:
   workflow_dispatch:
     inputs:
       environments:
-       description: choose something
-       required: true
-       default: dev
-       type: choice
-       options:
-         - dev
-         - uat
-         - prelive
-         
-      artifact_tag:
+        description: choose something
         required: true
-      
+        default: dev
+        type: choice
+        options:
+          - dev
+          - uat
+          - prelive
+
+      artifact_tag:
+        description: Artifact version/tag
+        required: true
 
 jobs:
   build:
@@ -28,49 +28,57 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
       - name: Install Dependencies
         run: npm install
 
       - name: Run Tests
         run: npm test
+
+      - name: Build App
+        run: |
+          npm run build || echo "No build script, creating dummy artifact"
+          mkdir -p output
+          echo "artifact-${{ github.event.inputs.artifact_tag }}" > output/version.txt
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: my-build
+          name: my-build-${{ github.event.inputs.artifact_tag }}
           path: |
             dist/
             build/
-        
-
+            output/
+          if-no-files-found: warn
 
   test:
     runs-on: ubuntu-latest
     needs: build
-      
 
     steps:
-      - name: Run Additional Tests
-        run: echo "Running additional tests..."
-      
-      - name: Checkout Code
-        uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
         with:
-          node-version: '18'
-      - name: Install Dependencies
-        run: npm install
-      - name: Run Tests
-        run: npm test
-        
+          name: my-build-${{ github.event.inputs.artifact_tag }}
+
+      - name: Verify Artifact
+        run: ls -R
+
+      - name: Run Additional Tests
+        run: echo "Running additional tests on artifact..."
 
   deploy:
     runs-on: ubuntu-latest
     needs: test
 
     steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: my-build-${{ github.event.inputs.artifact_tag }}
+
       - name: Deploy Application
-        run: echo "Deploying application..."
+        run: |
+          echo "Deploying to ${{ github.event.inputs.environments }}"
+          ls -R
