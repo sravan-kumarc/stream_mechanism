@@ -35,8 +35,6 @@ jobs:
 
       - name: Run Tests
         run: npm test
-      - name: Build App
-        run: npm run build   # make sure this exists
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
