@@ -22,4 +22,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Randompick
-        run: echo "hello ${{ inputs.artifact_tags}} and ${{inputs.environemnt}}" 
+        run: echo "hello ${{ inputs.artifact_tags}} and ${{inputs.environment}}" 
