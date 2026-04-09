@@ -2,10 +2,12 @@ name: Day 6 - Deploy to S3
 
 on:
   push:
+  
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: dev
 
     steps:
       - name: Checkout
