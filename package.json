@@ -4,6 +4,5 @@
   "scripts": {
     "build": "echo Building app...",
     "test": "echo Running tests...",
-    "test": "exit 1"
   }
 }
