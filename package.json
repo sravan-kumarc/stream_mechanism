@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "scripts": {
     "build": "echo Building app...",
-    "test": "echo Running tests...",
+    "test": "echo Running tests..."
   }
 }
