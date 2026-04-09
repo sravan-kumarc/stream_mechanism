@@ -1,0 +1,31 @@
+name: Day2 YAML Script
+
+on:
+  push:
+
+jobs:
+  firstjob:
+       runs-on: ubuntu-latest
+
+       steps:
+       - name: checkOut
+         uses: actions/checkout@v4
+
+       - name: list files
+         run: ls -a
+
+       - name: Set variable
+         run: echo "MY_NAME=Sravan" >> $GITHUB_ENV
+        # Step 4: Use variable
+       - name: Use variable
+         run: echo "Hello $MY_NAME, welcome to CI!"
+
+        # Step 5: Simulate build
+       - name: Build step
+         run: echo "Building application..."
+
+       # Step 6: Simulate test
+       - name: Test step
+         run: echo "Running tests..."
+
+        
