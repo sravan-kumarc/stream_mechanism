@@ -13,3 +13,6 @@ jobs:
       
       - name: Show system info
         run: uname -a
+
+      - name: Date
+        run: date
