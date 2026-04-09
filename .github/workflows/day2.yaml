@@ -1,4 +1,4 @@
-name: Day2 YAML Script
+name: Day 2 YAML Script
 
 on:
   push:
