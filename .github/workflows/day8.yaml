@@ -1,0 +1,24 @@
+name: Day 8 - SKC self learn
+
+on:
+  workflow_dispatch:
+    inputs:
+      environemnt:
+        description: "Test"
+        required: true
+        default: dev
+        type: choice
+        options:
+          - dev
+          - prod
+      artifact_tags:
+        default: true
+        description: "timepass"
+
+        
+jobs:
+  trail:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Randompick
+        run: "hello ${{ inputs.artifact_tags}} and ${{inputs.environemnt}}" 
