@@ -1,0 +1,39 @@
+name: Day 5 - CI Optimization
+
+on:
+  push:
+
+jobs:
+
+  build_job:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: build
+        run: echo "building....."
+
+  test_job:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20]
+
+    steps:
+      - name: checkoutcode
+        uses: actions/checkout@v4
+
+    
+      - name: settingNode
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: run tests
+        run: echo "tests on ${{matrix.node-version}}"
+        
+            
+          
+        
