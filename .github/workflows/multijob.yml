@@ -11,7 +11,8 @@ on:
         options:
           - dev
           - uat
-          - prelive
+          - pre-live
+          - box
 
       artifact_tag:
         description: Artifact version/tag
