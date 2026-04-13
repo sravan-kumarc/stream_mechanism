@@ -1,4 +1,4 @@
-name: CI
+name: HandsOn_Practice
 on:
   workflow_dispatch:
     inputs:
