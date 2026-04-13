@@ -1,6 +1,16 @@
 name: CI
 on:
   workflow_dispatch:
+    inputs:
+      environments:
+        default: dev
+        description: choose envs
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod
+        
 
 jobs:
   build:
@@ -11,8 +21,3 @@ jobs:
 
       - name: Run a one-line script
         run: echo Hello, world!
-
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
