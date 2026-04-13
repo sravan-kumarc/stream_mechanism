@@ -1,0 +1,17 @@
+name: Day 4 Composite Action
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-composite:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use custom action
+        uses: ./.github/actions/greet
+        with:
+          name: Sravan
