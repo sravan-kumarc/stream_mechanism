@@ -2,6 +2,10 @@ name: Common Workflow
 
 on:
   workflow_call:
+    inputs:
+      name:
+        required: true
+        type: string
 
 jobs:
   reusable-job:
@@ -9,7 +13,9 @@ jobs:
 
     steps:
       - name: Step 1
-        run: echo "Hello from reusable workflow"
+        run: |
+          echo "Hello from reusable workflow"
+          echo "Hello ${{ inputs.name }}"
 
       - name: Step 2
         run: echo "This is shared logic"
