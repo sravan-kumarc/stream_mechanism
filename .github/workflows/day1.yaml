@@ -17,6 +17,7 @@ jobs:
       - name: Date
         run: date
 
-      - name: Force failure
-        run: exit 1
-        continue-on-error: true
+      - name: Verify runner
+        run: |
+         echo "Runner: $RUNNER_NAME"
+         echo "OS: $RUNNER_OS"
