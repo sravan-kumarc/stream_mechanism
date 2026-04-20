@@ -21,3 +21,39 @@ jobs:
         run: |
          echo "Runner: $RUNNER_NAME"
          echo "OS: $RUNNER_OS"
+         
+      - name: slack notify
+        uses: slackapi/slack-github-actions@v1.24.0
+        with:
+          channel-ids: ${{ secrets.SLACK_CID }}
+          paylod: |
+            {
+              "text": "🚀 GitHub Actions Started!",
+              "attachments": [
+                {
+                  "color": "#36a64f",
+                  "fields": [
+                    {
+                      "title": "Repository",
+                      "value": "${{ github.repository }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Branch",
+                      "value": "${{ github.ref_name }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Triggered By",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACT_BOT_TOKEN }}
+          
+        
+        
