@@ -18,7 +18,13 @@ jobs:
          
       - name: Slack Success
         if: success()
-        run: |
-          curl -X POST -H 'Content-type: application/json' \
-            --data '{"text":"✅ Pipeline Success"}' \
-            ${{ secrets.SLACK_WEBHOOK_URL }}
+
+        uses: slackapi/slack-github-actions@v2.1.0
+        with:
+         channel-id: ${{ secrets.SLACK_CID }}
+         payload: |
+              {
+                "text": "✅ Job SUCCESS"
+              }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
