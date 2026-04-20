@@ -30,8 +30,8 @@ jobs:
         run: date
 
       # 👉 Uncomment this to test failure scenario
-      # - name: Force failure
-      #   run: exit 1
+      - name: Force failure
+        run: exit 1
 
       - name: ✅ Notify Slack - Success
         if: success()
