@@ -2,29 +2,55 @@ name: Day 1 - Hello Workflow
 
 on:
   workflow_dispatch:
-    
+
 jobs:
   hello-job:
     runs-on: ubuntu-latest
 
     steps:
+      - name: 🚀 Notify Slack - Start
+        uses: slackapi/slack-github-action@v3.0.0
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            {
+              "text": "🚀 Pipeline STARTED\nRepo: ${{ github.repository }}\nBranch: ${{ github.ref_name }}\nTriggered by: ${{ github.actor }}"
+            }
+
       - name: Print message
         run: echo "Hello Sravan, CI/CD started!"
 
       - name: Verify runner
         run: |
-         echo "Runner: $RUNNER_NAME"
-         echo "OS: $RUNNER_OS"
-         
-      - name: Slack Success
-        if: success()
+          echo "Runner: $RUNNER_NAME"
+          echo "OS: $RUNNER_OS"
 
+      - name: Show Date
+        run: date
+
+      # 👉 Uncomment this to test failure scenario
+      # - name: Force failure
+      #   run: exit 1
+
+      - name: ✅ Notify Slack - Success
+        if: success()
         uses: slackapi/slack-github-action@v3.0.0
         with:
-         channel-id: ${{ secrets.SLACK_CID }}
-         payload: |
-              {
-                "text": "✅ Job SUCCESS"
-              }
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            {
+              "text": "✅ Pipeline SUCCESS\nRepo: ${{ github.repository }}\nBranch: ${{ github.ref_name }}\nRun: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }
+
+      - name: ❌ Notify Slack - Failure
+        if: failure()
+        uses: slackapi/slack-github-action@v3.0.0
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            {
+              "text": "❌ Pipeline FAILED\nRepo: ${{ github.repository }}\nBranch: ${{ github.ref_name }}\nRun: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }
